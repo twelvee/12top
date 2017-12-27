@@ -40,7 +40,7 @@ class UserView
 			while($tt = $this->db->get_row($query)){
 				$toTempl['info'][$tt[id]] = $tt;
 			}
-			return $this->tpl->display("top.tpl", $toTempl);
+			$this->tpl->display("top.tpl", $toTempl);
 		}else{
 			return "Топ не найден.";
 		}
