@@ -63,6 +63,28 @@ if( ! $user_group ) {
 	$db->free();
 }
 
+$buff['error'] = true;
+if(isset($_POST['action']) && $_POST['action']=='getFieldByType'){
+	$type = $db->safesql($_POST['type']);
+	$get_fields = $db->query("SELECT sel_value FROM ".PREFIX."_top_types WHERE id='$type'");
+	
+	while ($row = $db->get_row($get_fields)) {
+		$buff['fields'] .= '<option value="'.$row[sel_value].'">'.$row[sel_value].'</option>';
+		$buff['error'] = false;
+	}
+}else if(isset($_POST['action']) && $_POST['action']=='getCustomize'){
+	$type = $db->safesql($_POST['type']);
+	if($type==1){
+		# Доп поле пользователей
+		
+	}else if($type==2){
+		# Доп поле новостей
+		
+	}else if($type==3){
+		# Кастомное поле
+		$buff['error'] = false;
+	}
+}
 
-
+echo json_encode($buff);
 ?>

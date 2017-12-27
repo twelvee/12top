@@ -14,6 +14,7 @@ class AdminPanel
 		Fenom::registerAutoload(ENGINE_DIR."/modules/12top/lib/fenom");
 		$this->db = $db;
 		$this->tpl = new Fenom(new Fenom\Provider($this->template_dir));
+		$this->tpl->setOptions(Fenom::DISABLE_CACHE);
 	}
 	public function echoheader($header_title, $header_subtitle) {
 		global $skin_header, $skin_footer, $member_id, $user_group, $js_array, $css_array, $config, $lang, $is_loged_in, $mod, $action, $langdate, $db, $dle_login_hash;
@@ -56,7 +57,22 @@ class AdminPanel
 	}
 
 	public function show() {
-		$this->tpl->display("main.tpl");
+		if(isset($_GET['action']) && $_GET['action']=='widget') { 
+			$get_types = $this->db->query("SELECT id, name FROM ".PREFIX."_top_types");
+			$data = array();
+			while ($row = $this->db->get_row($get_types)) {
+				$data['type_options'][$row['id']] = $row;
+			}
+			$get_widgets = $this->db->query("SELECT * FROM ".PREFIX."_top_widgets");
+			while ($row = $this->db->get_row($get_widgets)) {
+				$data['tableval'][$row[id]] = $row;
+			}
+			$this->tpl->display("widget.tpl", $data);
+		}
+		else if(isset($_GET['action']) && $_GET['action']=='settings') $this->tpl->display("settings.tpl");
+		else if(isset($_GET['action']) && $_GET['action']=='custom') $this->tpl->display("custom.tpl");
+		else if(isset($_GET['action']) && $_GET['action']=='info') $this->tpl->display("info.tpl");
+		else $this->tpl->display("main.tpl");
 	}
 }
 ?>
