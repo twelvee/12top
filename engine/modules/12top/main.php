@@ -7,14 +7,14 @@
 =====================================================
 */
 
-class TwelveTop
+if(!defined('DATALIFEENGINE'))
 {
-	private $tpl;
-	private $db;
-	function __construct($tpl, $db)
-	{
-		$this->tpl = $tpl;
-		$this->db = $db;
-	}
+  die("Hacking attempt!");
+}
+
+if(isset($widget)){
+	require_once(ENGINE_DIR."/modules/12top/user/user.php");
+	$user = new UserView($db, $widget, $config);
+	echo $user->result();
 }
 ?>

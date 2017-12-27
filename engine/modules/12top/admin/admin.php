@@ -80,7 +80,7 @@ class AdminPanel
 					}
 					$get_widgets = $this->db->query("SELECT * FROM ".PREFIX."_top_widgets");
 					while ($row = $this->db->get_row($get_widgets)) {
-						$row['tag'] = '{include file="engine/modules/12top.php?id='.$row[id].'"}';
+						$row['tag'] = '{include file="engine/modules/12top/main.php?widget='.$row[id].'"}';
 						$data['tableval'][$row[id]] = $row;
 					}
 
